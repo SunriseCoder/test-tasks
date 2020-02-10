@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import webservices1.entities.Account;
 import webservices1.entities.Field;
-import webservices1.exceptions.InvalidRequestException;
+import webservices1.exceptions.RequestException;
 import webservices1.repositories.AccountRepository;
 import webservices1.repositories.FieldRepository;
 
@@ -55,10 +55,10 @@ public class FieldService {
     }
 
     @Transactional
-    public void update(Long id, Map<String, String> requestBody) throws InvalidRequestException {
+    public void update(Long id, Map<String, String> requestBody) throws RequestException {
         Field field = fieldRepository.getOne(id);
         if (field == null) {
-            throw new InvalidRequestException("Field not found");
+            throw new RequestException("field.does.not.exist", 5, "Field does not exist");
         }
 
         if (!field.getAccount().getName().equals(requestBody.get("AccountName"))) {
@@ -74,10 +74,10 @@ public class FieldService {
     }
 
     @Transactional
-    public void delete(Long id) throws InvalidRequestException {
+    public void delete(Long id) throws RequestException {
         Field field = fieldRepository.getOne(id);
         if (field == null) {
-            throw new InvalidRequestException("Field not found");
+            throw new RequestException("field.does.not.exist", 5, "Field does not exist");
         }
 
         fieldRepository.deleteById(id);

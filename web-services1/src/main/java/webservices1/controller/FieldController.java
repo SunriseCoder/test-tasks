@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import webservices1.entities.Field;
-import webservices1.exceptions.InvalidRequestException;
+import webservices1.exceptions.RequestException;
 import webservices1.services.FieldService;
 
 @RestController
@@ -32,17 +32,17 @@ public class FieldController {
     }
 
     @PostMapping("{id}")
-    public void editField(@PathVariable("id") Long id, @RequestBody Map<String, String> requestBody) throws InvalidRequestException {
+    public void editField(@PathVariable("id") Long id, @RequestBody Map<String, String> requestBody) throws RequestException {
         fieldService.update(id, requestBody);
     }
 
     @DeleteMapping("{id}")
-    public void deleteField(@PathVariable("id") Long id) throws InvalidRequestException {
+    public void deleteField(@PathVariable("id") Long id) throws RequestException {
         fieldService.delete(id);
     }
 
     @GetMapping("")
-    public List<Map<String, String>> getAllFields() {
+    public List<Map<String, String>> getAllFields() throws RequestException {
         List<Map<String, String>> response = new ArrayList<>();
         List<Field> fields = fieldService.getAll();
         for (Field field : fields) {
@@ -53,13 +53,16 @@ public class FieldController {
     }
 
     @GetMapping("{id}")
-    public Map<String, String> getField(@PathVariable("id") Long id) {
+    public Map<String, String> getField(@PathVariable("id") Long id) throws RequestException {
         Field field = fieldService.get(id);
+        if (field == null) {
+            throw new RequestException("field.does.not.exist", 5, "Field does not exist");
+        }
         Map<String, String> response = fieldToMap(field);
         return response;
     }
 
-    private Map<String, String> fieldToMap(Field field) {
+    private Map<String, String> fieldToMap(Field field) throws RequestException {
         Map<String, String> fieldMap = new HashMap<>();
 
         fieldMap.put("FieldId", field.getId().toString());

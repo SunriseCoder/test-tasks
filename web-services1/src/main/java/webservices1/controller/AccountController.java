@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import webservices1.entities.Account;
 import webservices1.entities.Field;
+import webservices1.exceptions.RequestException;
 import webservices1.services.AccountService;
 
 @RestController
@@ -35,8 +36,11 @@ public class AccountController {
     }
 
     @GetMapping("{id}")
-    public Map<String, Object> get(@PathVariable("id") Long id) {
+    public Map<String, Object> get(@PathVariable("id") Long id) throws RequestException {
         Account account = accountService.get(id);
+        if (account == null) {
+            throw new RequestException("account.not.found", 6, "Account not found");
+        }
         Map<String, Object> response = accountToMap(account);
         return response;
     }
