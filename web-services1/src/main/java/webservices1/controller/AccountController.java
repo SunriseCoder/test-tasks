@@ -21,26 +21,39 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @GetMapping("")
+    public List<Map<String, Object>> getAll() {
+        List<Account> accounts = accountService.getAll();
+
+        List<Map<String, Object>> response = new ArrayList<>();
+        for (Account account : accounts) {
+            Map<String, Object> accountMap = accountToMap(account);
+            response.add(accountMap);
+        }
+
+        return response;
+    }
+
     @GetMapping("{id}")
-    public Map<String, Object> getField(@PathVariable("id") Long id) {
+    public Map<String, Object> get(@PathVariable("id") Long id) {
         Account account = accountService.get(id);
         Map<String, Object> response = accountToMap(account);
         return response;
     }
 
     private Map<String, Object> accountToMap(Account account) {
-        Map<String, Object> fieldMap = new HashMap<>();
+        Map<String, Object> accountMap = new HashMap<>();
 
-        fieldMap.put("AccountId", account.getId().toString());
-        fieldMap.put("AccountName", account.getName());
-        fieldMap.put("AccountEmail", account.getEmail());
+        accountMap.put("AccountId", account.getId().toString());
+        accountMap.put("AccountName", account.getName());
+        accountMap.put("AccountEmail", account.getEmail());
 
         List<String> fields = new ArrayList<>();
         for (Field field : account.getFields()) {
             fields.add(field.getId().toString());
         }
-        fieldMap.put("Fields", fields);
+        accountMap.put("Fields", fields);
 
-        return fieldMap;
+        return accountMap;
     }
 }
