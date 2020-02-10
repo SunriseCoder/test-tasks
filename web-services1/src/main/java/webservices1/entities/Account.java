@@ -1,9 +1,12 @@
 package webservices1.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -19,4 +22,7 @@ public class Account {
 
     @Column
     private String email;
+
+    @OneToMany(mappedBy = "account")
+    private List<Field> fields;
 }
