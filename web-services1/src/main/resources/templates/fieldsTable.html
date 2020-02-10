@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fields Table</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <th>FieldId</th>
+                <th>FieldName</th>
+                <th>Lat</th>
+                <th>Lon</th>
+                <th>AccountName</th>
+                <th>AccountEmail</th>
+            </tr>
+            <tr th:each="field :${fields}">
+                <td th:text="${field.id}">FieldId</td>
+                <td th:text="${field.name}">FieldName</td>
+                <td th:text="${field.lat}">Lat</td>
+                <td th:text="${field.lon}">Lon</td>
+                <td th:text="${field.account.name}">AccountName</td>
+                <td th:text="${field.account.email}">AccountEmail</td>
+            </tr>
+        </table>
+    </body>
+</html>
