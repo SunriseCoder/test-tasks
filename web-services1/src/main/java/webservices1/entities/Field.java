@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "fields")
 public class Field {
     @Id
     @GeneratedValue

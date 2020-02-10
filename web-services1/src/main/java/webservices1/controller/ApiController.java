@@ -3,6 +3,7 @@ package webservices1.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,5 +29,10 @@ public class ApiController {
     @PostMapping("/field/{id}")
     public void editField(@PathVariable("id") Long id, @RequestBody Map<String, String> requestBody) throws InvalidRequestException {
         fieldService.update(id, requestBody);
+    }
+
+    @DeleteMapping("/field/{id}")
+    public void deleteField(@PathVariable("id") Long id) throws InvalidRequestException {
+        fieldService.delete(id);
     }
 }

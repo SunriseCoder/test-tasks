@@ -62,6 +62,17 @@ public class FieldService {
         fieldRepository.save(field);
     }
 
+    @Transactional
+    public void delete(Long id) throws InvalidRequestException {
+        Field field = fieldRepository.getOne(id);
+        if (field == null) {
+            throw new InvalidRequestException("Field not found");
+        }
+
+        fieldRepository.deleteById(id);
+        accountRepository.delete(field.getAccount());
+    }
+
     private Account findOrCreateAccount(Map<String, String> requestBody) {
         Account account = accountRepository.findOneByName(requestBody.get("AccountName"));
         if (account == null) {
