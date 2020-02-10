@@ -24,7 +24,6 @@ public class Field {
     @Column
     private String lon;
 
-    @Column
     @ManyToOne
     private Account account;
 }
