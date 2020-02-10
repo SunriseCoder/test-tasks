@@ -15,6 +15,9 @@ public class Field {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
+    private Account account;
+
     @Column
     private String name;
 
@@ -23,7 +26,4 @@ public class Field {
 
     @Column
     private String lon;
-
-    @ManyToOne
-    private Account account;
 }

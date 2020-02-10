@@ -1,6 +1,7 @@
 package webservices1.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -20,6 +21,11 @@ public class FieldService {
     private AccountRepository accountRepository;
     @Autowired
     private FieldRepository fieldRepository;
+
+    public List<Field> getAll() {
+        List<Field> fields = fieldRepository.findAll();
+        return fields;
+    }
 
     public Account getByAccountName(String accountName) {
         Account account = accountRepository.findOneByName(accountName);
