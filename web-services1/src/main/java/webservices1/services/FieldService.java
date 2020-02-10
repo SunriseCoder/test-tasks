@@ -27,6 +27,11 @@ public class FieldService {
         return fields;
     }
 
+    public Field get(Long id) {
+        Field field = fieldRepository.getOne(id);
+        return field;
+    }
+
     public Account getByAccountName(String accountName) {
         Account account = accountRepository.findOneByName(accountName);
         return account;

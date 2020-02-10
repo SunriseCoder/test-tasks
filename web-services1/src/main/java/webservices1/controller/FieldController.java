@@ -46,17 +46,29 @@ public class FieldController {
         List<Map<String, String>> response = new ArrayList<>();
         List<Field> fields = fieldService.getAll();
         for (Field field : fields) {
-            Map<String, String> fieldMap = new HashMap<>();
-
-            fieldMap.put("FieldId", field.getId().toString());
-            fieldMap.put("Lat", field.getLat());
-            fieldMap.put("Lon", field.getLon());
-            fieldMap.put("FieldName", field.getName());
-            fieldMap.put("AccountName", field.getAccount().getName());
-            fieldMap.put("AccountEmail", field.getAccount().getEmail());
-
+            Map<String, String> fieldMap = fieldToMap(field);
             response.add(fieldMap);
         }
         return response;
+    }
+
+    @GetMapping("{id}")
+    public Map<String, String> getField(@PathVariable("id") Long id) {
+        Field field = fieldService.get(id);
+        Map<String, String> response = fieldToMap(field);
+        return response;
+    }
+
+    private Map<String, String> fieldToMap(Field field) {
+        Map<String, String> fieldMap = new HashMap<>();
+
+        fieldMap.put("FieldId", field.getId().toString());
+        fieldMap.put("Lat", field.getLat());
+        fieldMap.put("Lon", field.getLon());
+        fieldMap.put("FieldName", field.getName());
+        fieldMap.put("AccountName", field.getAccount().getName());
+        fieldMap.put("AccountEmail", field.getAccount().getEmail());
+
+        return fieldMap;
     }
 }
